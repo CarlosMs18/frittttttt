@@ -1,0 +1,78 @@
+<div class="container" *ngIf="cargando">
+  <div class="row">
+    <div class="col">
+      <app-spinner></app-spinner>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="!cargando" >
+  <div class="row">
+    <div class="col text-center">
+      <h2>{{nombreTitulo}}</h2>
+
+      <ul class="alert alert-danger" *ngIf="errores.length > 0" >
+        <li *ngFor="let error of errores">
+          {{error}}
+      </li>
+      </ul>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <form  [formGroup]=clienteForm  (ngSubmit)="enviarDatos()" >
+        <div class="row mt-3">
+          <div class="col-6">
+              <label for="form-label">Nombre</label>
+              <input
+              type="text"
+              class="form-control"
+               placeholder="Nombre"
+               formControlName="nombre"
+              >
+
+          </div>
+          <div class="col-6">
+            <label for="form-label">Email</label>
+            <input
+            type="text"
+            class="form-control"
+            placeholder="E-mail"
+            formControlName="email"
+            >
+          </div>
+          <div class="col-6 mt-3">
+            <label for="form-label">FechaCreacion</label>
+            <input
+            type="date"
+            class="form-control"
+            formControlName="fechaCreacion"
+             >
+          </div>
+         <!--  <div class="col-6 mt-3">
+            <label for="form-label">Region</label>
+            <select class="form-control" formControlName="region" ></select>
+          </div> -->
+
+
+          <div class="col-6 mt-3" formGroupName="region">
+            <label for="form-label">Region</label>
+            <select  class="form-control" formControlName="id">
+              <option value="">--Seleccione Region--</option>
+              <option
+              *ngFor="let region of regiones"
+              [value]="region.id"
+              >
+                {{region.nombre}}
+              </option>
+            </select>
+          </div>
+          <div class="col-12 text-center mt-5">
+            <button class="btn btn-primary" [disabled]="clienteForm.invalid" >{{nombreBtn}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
